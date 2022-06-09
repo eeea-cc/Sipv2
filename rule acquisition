@@ -17,5 +17,3 @@ u_u=$(echo -n "$(cat /w_w/@)")
 
 cat /tmp/.0 |sed "s/0\.1\.0\.1/$i_i/g;s/u_u_i_d/$u_u/g" >/w_w/$u_u
 
-openssl req -new -SHA256 -newkey rsa:2048 -nodes -keyout /opt/ssl/key.key -out /opt/ssl/csr.csr -subj "/C=HK/ST=Shanghai/L=Shanghai/O=/OU=/CN=127.0.0.1"
-openssl x509 -req -in /opt/ssl/csr.csr -out /opt/ssl/crt.crt -signkey /opt/ssl/key.key -days 3650
