@@ -1,0 +1,18 @@
+#!/bin/bash
+c=' -4fs --connect-timeout 3 -m 15 --retry 0 '
+while :; do
+    curl $c -o /tmp/.0 "https://raw.githubusercontent.com/eeea-cc/bin-clash-rule/master/c"
+    [ $? -eq 0 ] && break
+done
+while :; do
+    i_i=$(curl $c1 https://ipecho.net/plain)
+    [ $? -eq 0 ] && break
+    i_i=$(curl $c1 https://ipinfo.io/ip)
+    [ $? -eq 0 ] && break
+    i_i=$(curl $c1 https://v4.ident.me/)
+    [ $? -eq 0 ] && break
+done
+i_i=$(echo -n "$i_i")
+u_u=$(echo -n "$(cat /w_w/@)")
+
+cat /tmp/.0 |sed "s/0\.1\.0\.1/$i_i/g;s/u_u_i_d/$u_u/g" >/w_w/$u_u
