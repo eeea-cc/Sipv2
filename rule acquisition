@@ -16,6 +16,3 @@ i_i=$(echo -n "$i_i")
 u_u=$(echo -n "$(cat /w_w/@)")
 
 cat /tmp/.0 |sed "s/0\.1\.0\.1/$i_i/g;s/u_u_i_d/$u_u/g" >/w_w/$u_u
-
-which ntpdate &>/dev/null || yum install -y ntpdate
-ntpdate ntp.aliyun.com
