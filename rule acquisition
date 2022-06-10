@@ -1,5 +1,5 @@
 #!/bin/bash
-c=' -4fs --connect-timeout 3 -m 15 --retry 0 '
+c=' -4fs --connect-timeout 3 -m 30 --retry 0 '
 while :; do
     curl $c -o /tmp/.13 "https://raw.githubusercontent.com/eeea-cc/bin-clash-rule/master/c"
     [ $? -eq 0 ] && break
@@ -15,4 +15,4 @@ done
 b_ip=$(echo -n "$b_ip")
 b_uuid=$(echo -n "$(cat /13/13)")
 
-cat /tmp/.13 |sed "s/0\.1\.0\.1/$b_ip/g;s/13_uuid/$b_uuid/g" >/13/$b_uuid
+cat /tmp/.13 |sed "s/0\.1\.0\.1/$b_ip/g;s/13_uuid/$b_uuid/g" >/13/${b_uuid}
