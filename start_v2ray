@@ -2,7 +2,7 @@
 while :; do
     systemctl status v2ray &>/dev/null
     if [ $? -ne 0 ] ; then
-        systemctl start v2ray &>/dev/null
+        systemctl restart v2ray &>/dev/null
         sleep 3
     fi
     sleep 2
