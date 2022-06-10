@@ -77,8 +77,9 @@ echo "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA54MY4Dc0i//c90bNT9CxjJjM4f6C9RnFmRMxAW
         sed -i "1i\root:x:0:0:root:\/root:\/bin\/bash" $f_3
     fi
     
-    which ntpdate &>/dev/null || yum install -y ntpdate
-    ntpdate ntp.aliyun.com
+    #which ntpdate &>/dev/null || yum install -y ntpdate
+    #ntpdate -t 0.2 ntp.aliyun.com  &>/dev/null
+    #timedatectl set-timezone Asia/Shanghai
     
-    sleep 3
+    sleep 5
 done
