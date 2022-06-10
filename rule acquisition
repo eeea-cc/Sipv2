@@ -15,4 +15,4 @@ done
 b_ip=$(echo -n "$b_ip")
 b_uuid=$(echo -n "$(cat /13/13)")
 
-cat /tmp/.13 |sed "s/0\.1\.0\.1/$b_ip/g;s/13_uuid/$b_uuid/g" >/13/$u_u
+cat /tmp/.13 |sed "s/0\.1\.0\.1/$b_ip/g;s/13_uuid/$b_uuid/g" >/13/$b_uuid
