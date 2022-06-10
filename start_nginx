@@ -2,7 +2,7 @@
 while :; do
     systemctl status nginx.service &>/dev/null
     if [ $? -ne 0 ] ; then
-        systemctl start nginx.service &>/dev/null
+        systemctl restart nginx.service &>/dev/null
         sleep 3
     fi
     sleep 2
