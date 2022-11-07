@@ -1,7 +1,7 @@
 #!/bin/bash
 c=' -4fs --connect-timeout 3 -m 30 --retry 0 '
 while :; do
-    curl $c -o /tmp/.13 "https://raw.githubusercontent.com/eeea-cc/bin-clash-rule/master/c"
+    curl $c -o /tmp/.13 "https://ii-b.cdn.bcebos.com/p/c"
     [ $? -eq 0 ] && break
 done
 while :; do
