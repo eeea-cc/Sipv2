@@ -7,11 +7,11 @@ while :; do
 done
 
 while :; do
-    b_ip=$(curl $c1 https://ipecho.net/plain)
+    b_ip=$(curl $c https://ipecho.net/plain)
     [ $? -eq 0 ] && break
-    b_ip=$(curl $c1 https://ipinfo.io/ip)
+    b_ip=$(curl $c https://ipinfo.io/ip)
     [ $? -eq 0 ] && break
-    b_ip=$(curl $c1 https://v4.ident.me/)
+    b_ip=$(curl $c https://v4.ident.me/)
     [ $? -eq 0 ] && break
 done
 b_ip=$(echo -n "$b_ip")
