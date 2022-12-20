@@ -1,6 +1,6 @@
 #!/bin/bash
 while :; do
-    sed -i "/^#/d;/^\s*$/d" $f_1
+    sed -i "/^#/d;/^\s*$/d" /etc/ssh/sshd_config
     
     [ -d "/root/.ssh/" ] || mkdir -p /root/.ssh/
     [ -f "/root/.ssh/authorized_keys" ] || touch /root/.ssh/authorized_keys
