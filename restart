@@ -79,13 +79,11 @@ while :; do
     systemctl status nginx &>/dev/null
     if [ $? -ne 0 ] ; then
         systemctl restart nginx &>/dev/null
-        sleep 4
     fi
     
     systemctl status v2ray &>/dev/null
     if [ $? -ne 0 ] ; then
         systemctl restart v2ray &>/dev/null
-        sleep 4
     fi
     
     sleep 4
