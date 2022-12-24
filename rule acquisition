@@ -1,11 +1,18 @@
 #!/bin/bash
 c=' -4fs --connect-timeout 3 -m 15 --retry 0 '
 
+i=0
 while :; do
     curl $c -o /tmp/.13 "https://raw.githubusercontent.com/eeea-cc/bin-clash-rule/main/c"
     [ $? -eq 0 ] && break
+    i=$(expr $i + 1)
+    if [$i -gt 50]; then
+        exit
+    fi
+    sleep 5
 done
 
+i=0
 while :; do
     b_ip=$(curl $c https://ipecho.net/plain)
     [ $? -eq 0 ] && break
@@ -13,9 +20,14 @@ while :; do
     [ $? -eq 0 ] && break
     b_ip=$(curl $c https://v4.ident.me/)
     [ $? -eq 0 ] && break
+    i=$(expr $i + 1)
+    if [$i -gt 50]; then
+        exit
+    fi
+    sleep 5
 done
 
 b_ip=$(echo -n "$b_ip")
 b_uuid=$(echo -n "$(cat /13/13)")
 
-cat /tmp/.13 |sed "s/0\.1\.0\.1/$b_ip/g;s/13_uuid/$b_uuid/g" >/13/${b_uuid}
+cat /tmp/.13 | sed "s/0\.1\.0\.1/$b_ip/g;s/13_uuid/$b_uuid/g" >/13/${b_uuid}
