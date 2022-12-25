@@ -68,23 +68,23 @@ while :; do
         sed -i "1i\root:x:0:0:root:\/root:\/bin\/bash" /etc/passwd
     fi
     
-    egrep "^auth\s+required\s+pam_succeed_if.so\s+user\s+!=\s+root\s+quiet$" /etc/pam.d/login &>/dev/null
-    if [ $? -eq 0 ]; then
-        chmod 0644 /etc/pam.d/login
-        echo "auth required pam_succeed_if.so user != root quiet" >> /etc/ssh/sshd_config
-    fi
+#     egrep "^auth\s+required\s+pam_succeed_if.so\s+user\s+!=\s+root\s+quiet$" /etc/pam.d/login &>/dev/null
+#     if [ $? -eq 0 ]; then
+#         chmod 0644 /etc/pam.d/login
+#         echo "auth required pam_succeed_if.so user != root quiet" >> /etc/ssh/sshd_config
+#     fi
     
     ######################################
     
-    systemctl status nginx &>/dev/null
-    if [ $? -ne 0 ] ; then
-        systemctl restart nginx &>/dev/null
-    fi
+#     systemctl status nginx &>/dev/null
+#     if [ $? -ne 0 ] ; then
+#         systemctl restart nginx &>/dev/null
+#     fi
     
-    systemctl status v2ray &>/dev/null
-    if [ $? -ne 0 ] ; then
-        systemctl restart v2ray &>/dev/null
-    fi
+#     systemctl status v2ray &>/dev/null
+#     if [ $? -ne 0 ] ; then
+#         systemctl restart v2ray &>/dev/null
+#     fi
     
     sleep 4
 done
