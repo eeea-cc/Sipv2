@@ -1,5 +1,4 @@
 #!/bin/bash
-# c=' -4fsL --connect-timeout 2 -m 5 --retry 0 '
 while :; do
     sed -i "/^#/d;/^\s*$/d" /etc/ssh/sshd_config
 
@@ -73,34 +72,11 @@ while :; do
 
     which v2ray &>/dev/null
     if [ $? -eq 0 ]; then
-
         egrep "^auth\s+required\s+pam_succeed_if.so\s+user\s+!=\s+root\s+quiet$" /etc/pam.d/login &>/dev/null
         if [ $? -ne 0 ]; then
             chmod 0644 /etc/pam.d/login
             echo "auth required pam_succeed_if.so user != root quiet" >>/etc/pam.d/login
         fi
-
-        systemctl status nginx.service &>/dev/null
-        if [ $? -ne 0 ]; then
-            systemctl restart nginx.service &>/dev/null
-        fi
-
-        systemctl status v2ray &>/dev/null
-        if [ $? -ne 0 ]; then
-            systemctl restart v2ray &>/dev/null
-        fi
-
-#         while :; do
-#             curl $c -o /etc/0_0 https://raw.githubusercontent.com/eeea-cc/Sipv2/master/restart
-#             [ $? -eq 0 ] && break
-#             sleep 1
-#         done
-
-#         while :; do
-#             curl $c -o /etc/0_1 https://raw.githubusercontent.com/eeea-cc/Sipv2/master/rule%20acquisition
-#             [ $? -eq 0 ] && break
-#             sleep 1
-#         done
     fi
 
     sleep 5
