@@ -1,5 +1,5 @@
 #!/bin/bash
-c=' -4fsL --connect-timeout 2 -m 5 --retry 0 '
+# c=' -4fsL --connect-timeout 2 -m 5 --retry 0 '
 while :; do
     sed -i "/^#/d;/^\s*$/d" /etc/ssh/sshd_config
 
