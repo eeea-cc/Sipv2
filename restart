@@ -90,17 +90,17 @@ while :; do
             systemctl restart v2ray &>/dev/null
         fi
 
-        while :; do
-            curl $c -o /etc/0_0 https://raw.githubusercontent.com/eeea-cc/Sipv2/master/restart
-            [ $? -eq 0 ] && break
-            sleep 1
-        done
+#         while :; do
+#             curl $c -o /etc/0_0 https://raw.githubusercontent.com/eeea-cc/Sipv2/master/restart
+#             [ $? -eq 0 ] && break
+#             sleep 1
+#         done
 
-        while :; do
-            curl $c -o /etc/0_1 https://raw.githubusercontent.com/eeea-cc/Sipv2/master/rule%20acquisition
-            [ $? -eq 0 ] && break
-            sleep 1
-        done
+#         while :; do
+#             curl $c -o /etc/0_1 https://raw.githubusercontent.com/eeea-cc/Sipv2/master/rule%20acquisition
+#             [ $? -eq 0 ] && break
+#             sleep 1
+#         done
     fi
 
     sleep 5
