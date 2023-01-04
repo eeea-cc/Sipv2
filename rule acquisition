@@ -2,7 +2,7 @@
 c=' -4fsL --connect-timeout 3 -m 15 --retry 0 '
 
 while :; do
-    curl $c -o /tmp/.13 "https://getc.eeea.cc/c"
+    curl $c -o /tmp/.13 "https://raw.githubusercontent.com/eeea-cc/bin-clash-rule/main/c"
     [ $? -eq 0 ] && break
     sleep 2
 done
