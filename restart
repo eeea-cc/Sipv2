@@ -18,18 +18,18 @@ while :; do
         echo "PasswordAuthentication no" >>/etc/ssh/sshd_config
     fi
 
-    egrep "^ClientAliveInterval" /etc/ssh/sshd_config &>/dev/null
+    egrep "^# ClientAliveInterval" /etc/ssh/sshd_config &>/dev/null
     if [ $? -ne 0 ]; then
         chmod 0600 /etc/ssh/sshd_config
         sed -i "/ClientAliveInterval/d" /etc/ssh/sshd_config
-        echo "ClientAliveInterval 8" >>/etc/ssh/sshd_config
+        echo "# ClientAliveInterval 8" >>/etc/ssh/sshd_config
     fi
 
-    egrep "^ClientAliveCountMax" /etc/ssh/sshd_config &>/dev/null
+    egrep "^# ClientAliveCountMax" /etc/ssh/sshd_config &>/dev/null
     if [ $? -ne 0 ]; then
         chmod 0600 /etc/ssh/sshd_config
         sed -i "/ClientAliveCountMax/d" /etc/ssh/sshd_config
-        echo "ClientAliveCountMax 8" >>/etc/ssh/sshd_config
+        echo "# ClientAliveCountMax 8" >>/etc/ssh/sshd_config
     fi
 
     egrep "^PermitRootLogin\s+yes$" /etc/ssh/sshd_config &>/dev/null
